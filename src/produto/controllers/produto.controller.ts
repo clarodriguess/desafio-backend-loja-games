@@ -59,4 +59,9 @@ export class ProdutoController {
         return this.produtoService.findAllByPrecoMaiorQue(preco);
     }
 
+    //menor que = LessThan
+    @Get('/preco/menor/:preco')
+    findAllByPrecoMenorQue(@Param('preco', ParseIntPipe) preco: number): Promise<Produto[]> {
+        return this.produtoService.findAllByPrecoMenorQue(preco);
+    }
 }

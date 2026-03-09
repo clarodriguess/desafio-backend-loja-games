@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Produto } from "../entitites/produto.entity";
-import { ILike, MoreThan, Repository } from "typeorm";
+import { ILike, LessThan, MoreThan, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult } from "typeorm/browser";
 import { CategoriaService } from "../../categoria/services/categoria.service";
@@ -78,7 +78,8 @@ export class ProdutoService {
     }
 
     //desafio - metodo extra
-    //buscar produtos por faixa de preço, maior que = MoreThan do TypeORM
+    //buscar produtos por  preço -> maior que = MoreThan do TypeORM
+    //metodo find, parecido com o usado na busca por nome, mas usando o operador MoreThan para comparar o valor do preço
     async findAllByPrecoMaiorQue(preco: number): Promise<Produto[]> {
            return this.produtoRepository.find({
         where: {
@@ -86,9 +87,25 @@ export class ProdutoService {
         },
         relations: {
             categoria: true
+        },
+        order: {
+            preco: 'ASC' //para ordenar do menor para o maior preço
         }
     });
     }
 
-    
+    //buscar produtos por preço -> menor que = LessThan do TypeORM
+    async findAllByPrecoMenorQue(preco: number): Promise<Produto[]> {
+           return this.produtoRepository.find({
+        where: {
+            preco: LessThan(preco)
+        },
+        relations: {
+            categoria: true
+        },
+        order: {
+            preco: 'DESC' //para ordenar do maior para o menor preço
+        }
+    });
+    } 
 }  
