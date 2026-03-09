@@ -1,6 +1,7 @@
 import { Transform, TransformFnParams } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsPositive, Length } from "class-validator";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { NumericTransformer } from "../../util/numerictransformer";
 
 
 @Entity({name: "tb_produto"}) //create table "tb_produtos"
@@ -19,7 +20,7 @@ export class Produto { //atributos da tabela
     @IsNumber() //validação para aceitar apenas números
     @IsNotEmpty() //validação para não aceitar campos vazios
     @IsPositive() //validação para aceitar apenas números positivos
-    //@Column({type: "decimal", precision: 10, scale: 2, transformer: new NumericTransformer()}) // DECIMAL(10,2) NOT NULL
+    @Column({type: "decimal", precision: 10, scale: 2, transformer: new NumericTransformer()}) // DECIMAL(10,2) NOT NULL
     preco: number;
 
     @Column()
