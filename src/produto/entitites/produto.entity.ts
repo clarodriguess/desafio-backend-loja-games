@@ -27,7 +27,7 @@ export class Produto { //atributos da tabela
     @Column()
     foto: string;
 
-    //criar o relacionamento - um produto pertence a uma categoria, e uma categoria pode ter muitos produtos
+    //Relacionamento many to one - um produto pertence a uma categoria, e uma categoria pode ter muitos produtos
     @ManyToOne(() => Categoria, (categoria) => categoria.produtos)
     categoria: Categoria; //representa a chave estrangeira - um produto pertence a uma categoria
 }
