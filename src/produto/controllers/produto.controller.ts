@@ -48,8 +48,8 @@ export class ProdutoController {
     //@Delete - deletar um produto existente
     @Delete('/:id') //requisições DELETE '/produtos/:id' : indica que o id é uma variavel de caminho
     @HttpCode(HttpStatus.NO_CONTENT) //status 204 NO CONTENT para indicar que a exclusão foi realizada com sucesso e que não há conteúdo para retornar
-    delete(@Param('id', ParseIntPipe) id: number): Promise<void> { //o valor q vem no DELETE() chega como string, entao o ParseIntPipe converte para number
+    delete(@Param('id', ParseIntPipe) id: number) { //o valor q vem no DELETE() chega como string, entao o ParseIntPipe converte para number
         return this.produtoService.delete(id);
     }
-    
+
 }

@@ -1,7 +1,8 @@
 import { Transform, TransformFnParams } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsPositive, Length } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { NumericTransformer } from "../../util/numerictransformer";
+import { Categoria } from "../../categoria/entitites/categoria.entity";
 
 
 @Entity({name: "tb_produto"}) //create table "tb_produtos"
@@ -25,4 +26,8 @@ export class Produto { //atributos da tabela
 
     @Column()
     foto: string;
+
+    //criar o relacionamento - um produto pertence a uma categoria, e uma categoria pode ter muitos produtos
+    @ManyToOne(() => Categoria, (categoria) => categoria.produtos)
+    categoria: Categoria; //representa a chave estrangeira - um produto pertence a uma categoria
 }

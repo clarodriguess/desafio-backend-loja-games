@@ -1,6 +1,7 @@
 import { Transform, TransformFnParams } from "class-transformer";
 import { IsNotEmpty, Length } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Produto } from "../../produto/entitites/produto.entity";
 
 
 @Entity({name: 'tb_categorias'}) //CREATE TABLE tb_categorias
@@ -15,4 +16,8 @@ export class Categoria{
     @Length(5, 100, {message: 'A descrição do tema deve ter no mínimo 5 e no máximo 100 caracteres'}) //validação para o tamanho do campo 
     @Column({length: 100, nullable: false}) // VARCHAR(100) NOT NULL
     descricao: string;
+
+    //criar o relacionamento entre categoria e produto - uma categoria pode ter muitos produtos
+    @OneToMany(() => Produto, (produto) => produto.categoria)
+    produtos: Produto[]; //array de retorno
 }
