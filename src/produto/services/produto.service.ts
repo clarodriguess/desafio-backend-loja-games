@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Produto } from "../entitites/produto.entity";
-import { ILike, Repository } from "typeorm";
+import { ILike, MoreThan, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult } from "typeorm/browser";
 import { CategoriaService } from "../../categoria/services/categoria.service";
@@ -76,4 +76,19 @@ export class ProdutoService {
         await this.findById(id); //verificar se o produto existe no banco de dados
         return await this.produtoRepository.delete(id);  //delete from tb_postagens where id = ?
     }
+
+    //desafio - metodo extra
+    //buscar produtos por faixa de preço, maior que = MoreThan do TypeORM
+    async findAllByPrecoMaiorQue(preco: number): Promise<Produto[]> {
+           return this.produtoRepository.find({
+        where: {
+            preco: MoreThan(preco)
+        },
+        relations: {
+            categoria: true
+        }
+    });
+    }
+
+    
 }  

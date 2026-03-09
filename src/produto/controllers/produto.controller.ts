@@ -52,4 +52,11 @@ export class ProdutoController {
         return this.produtoService.delete(id);
     }
 
+    //desafio - buscar por valor
+    //maior que = MoreThan
+    @Get('/preco/maior/:preco')
+    findAllByPrecoMaiorQue(@Param('preco', ParseIntPipe) preco: number): Promise<Produto[]> {
+        return this.produtoService.findAllByPrecoMaiorQue(preco);
+    }
+
 }
