@@ -1,98 +1,190 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🎮 Loja de Games — Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST desenvolvida com **NestJS** e **TypeORM** para gerenciamento de uma loja de games, com cadastro de produtos e categorias. Projeto desenvolvido durante o Bootcamp Fullstack da **Generation Brasil**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🚀 Tecnologias Utilizadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [Node.js](https://nodejs.org/)
+- [NestJS](https://nestjs.com/)
+- [TypeORM](https://typeorm.io/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [MySQL](https://www.mysql.com/) *(ou banco configurado no projeto)*
+- [Insomnia](https://insomnia.rest/) *(para testes das rotas)*
 
-## Project setup
+---
 
-```bash
-$ npm install
+## 📁 Estrutura do Projeto
+
+```
+src/
+├── categoria/
+│   ├── controllers/
+│   │   └── categoria.controller.ts
+│   ├── entitites/
+│   │   └── categoria.entity.ts
+│   ├── services/
+│   │   └── categoria.service.ts
+│   └── categoria.module.ts
+├── produto/
+│   ├── controllers/
+│   │   └── produto.controller.ts
+│   ├── entitites/
+│   │   └── produto.entity.ts
+│   ├── services/
+│   │   └── produto.service.ts
+│   └── produto.module.ts
+├── util/
+│   └── numerictransformer.ts
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+└── main.ts
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## 🗂️ Modelo de Dados
 
-# watch mode
-$ npm run start:dev
+O projeto possui duas entidades que se relacionam:
 
-# production mode
-$ npm run start:prod
+- **Categoria** — representa a categoria do game (ex: RPG, Ação, Esporte)
+- **Produto** — representa o game em si, com nome, preço e vínculo a uma categoria
+
+> Relacionamento: **Produto N → 1 Categoria**
+
+---
+
+## 📌 Endpoints
+
+### Produtos — `/produtos`
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `GET` | `/produtos` | Lista todos os produtos |
+| `GET` | `/produtos/:id` | Busca produto por ID |
+| `GET` | `/produtos/nome/:nome` | Busca produtos pelo nome |
+| `GET` | `/produtos/preco/maior/:preco` | Lista produtos com preço maior que o valor informado (ordem crescente) |
+| `GET` | `/produtos/preco/menor/:preco` | Lista produtos com preço menor que o valor informado (ordem decrescente) |
+| `POST` | `/produtos` | Cria um novo produto |
+| `PUT` | `/produtos` | Atualiza um produto existente |
+| `DELETE` | `/produtos/:id` | Remove um produto pelo ID |
+
+### Categorias — `/categorias`
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `GET` | `/categorias` | Lista todas as categorias |
+| `GET` | `/categorias/:id` | Busca categoria por ID |
+| `POST` | `/categorias` | Cria uma nova categoria |
+| `PUT` | `/categorias` | Atualiza uma categoria existente |
+| `DELETE` | `/categorias/:id` | Remove uma categoria pelo ID |
+
+---
+
+## 📝 Exemplos de Requisição
+
+### Criar Produto — `POST /produtos`
+
+```json
+{
+  "nome": "The Last of Us Part II",
+  "preco": 199.90,
+  "foto": "https://link-da-imagem.com/foto.jpg",
+  "categoria": {
+    "id": 1
+  }
+}
 ```
 
-## Run tests
+### Atualizar Produto — `PUT /produtos`
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```json
+{
+  "id": 1,
+  "nome": "The Last of Us Part II Remastered",
+  "preco": 219.90,
+  "foto": "https://link-da-imagem.com/foto.jpg",
+  "categoria": {
+    "id": 1
+  }
+}
 ```
 
-## Deployment
+### Criar Categoria — `POST /categorias`
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```json
+{
+  "tipo": "Ação/Aventura"
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## ⚙️ Como Executar o Projeto
 
-Check out a few resources that may come in handy when working with NestJS:
+### Pré-requisitos
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- Node.js v18+
+- npm ou yarn
+- Banco de dados MySQL rodando localmente
 
-## Support
+### Instalação
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/desafio-backend-loja-games.git
 
-## Stay in touch
+# Entre na pasta do projeto
+cd desafio-backend-loja-games
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Instale as dependências
+npm install
+```
 
-## License
+### Configuração do Banco de Dados
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Configure as credenciais do banco no arquivo `app.module.ts` (ou no arquivo de configuração de ambiente):
+
+```typescript
+TypeOrmModule.forRoot({
+  type: 'mysql',
+  host: 'localhost',
+  port: 3306,
+  username: 'root',
+  password: 'sua-senha',
+  database: 'db_loja_games',
+  entities: [Produto, Categoria],
+  synchronize: true,
+})
+```
+
+### Executando
+
+```bash
+# Modo desenvolvimento
+npm run start:dev
+
+# Modo produção
+npm run start:prod
+```
+
+A API estará disponível em: `http://localhost:4000`
+
+---
+
+## ✅ Funcionalidades Implementadas
+
+- [x] CRUD completo de Produtos
+- [x] CRUD completo de Categorias
+- [x] Relacionamento entre Produto e Categoria
+- [x] Busca de produtos por nome (busca parcial com `ILike`)
+- [x] Busca de produtos por preço maior que um valor (`MoreThan`)
+- [x] Busca de produtos por preço menor que um valor (`LessThan`)
+- [x] Validação de existência da categoria ao criar/atualizar produto
+- [x] Tratamento de erros com `HttpException`
+- [x] Testes realizados via Insomnia
+
+---
+
