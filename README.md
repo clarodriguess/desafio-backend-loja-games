@@ -77,6 +77,7 @@ O projeto possui duas entidades que se relacionam:
 |--------|------|-----------|
 | `GET` | `/categorias` | Lista todas as categorias |
 | `GET` | `/categorias/:id` | Busca categoria por ID |
+| `GET` | `/categorias/descricao/:descricao` | Busca categorias pela descrição |
 | `POST` | `/categorias` | Cria uma nova categoria |
 | `PUT` | `/categorias` | Atualiza uma categoria existente |
 | `DELETE` | `/categorias/:id` | Remove uma categoria pelo ID |
@@ -153,7 +154,7 @@ TypeOrmModule.forRoot({
   host: 'localhost',
   port: 3306,
   username: 'root',
-  password: 'sua-senha',
+  password: 'root',
   database: 'db_loja_games',
   entities: [Produto, Categoria],
   synchronize: true,
@@ -187,4 +188,3 @@ A API estará disponível em: `http://localhost:4000`
 - [x] Testes realizados via Insomnia
 
 ---
-
