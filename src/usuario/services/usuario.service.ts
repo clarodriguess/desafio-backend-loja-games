@@ -26,10 +26,7 @@ export class UsuarioService {
 
     //Lista tds os usuarios
     async findAll(): Promise<Usuario[]> {
-        return await this.usuarioRepository.find({
-          relations:{
-            postagem: true
-          }
+        return await this.usuarioRepository.find({        
         });
 
     }
@@ -40,10 +37,8 @@ export class UsuarioService {
         const usuario = await this.usuarioRepository.findOne({
             where: {
                 id
-            },
-			relations:{
-            	postagem: true
-          	}
+            }
+			
         });
 
         if (!usuario)
